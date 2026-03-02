@@ -16,16 +16,17 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->foreignId('user_id')->constrained()->restrictOnDelete()->index();
             $table->foreignId('client_id')->constrained()->restrictOnDelete()->index();
-            $table->string('unique_number')->unique();
-            $table->string('contract_number')->unique();
+            $table->string('unique_number')->unique()->index();
+
+            $table->string('contract_number')->unique()->nullable();
+            $table->bigInteger('contract_amount')->unsigned()->nullable();
+
             $table->string('name')->index();
             $table->text('notes')->nullable();
-
-            $table->decimal('latitude', 10, 7)->nullable();
-            $table->decimal('longitude', 10, 7)->nullable();
+            $table->string('geolocation')->nullable();
             $table->string('street')->nullable();
-            $table->string('city')->nullable();
             $table->string('postal_code')->nullable();
+            $table->string('city')->nullable();
 
             $table->enum('scope', ProjectType::cases())->default(ProjectType::New);
             $table->enum('sector', ProjectSector::cases())->default(ProjectSector::Residential);
